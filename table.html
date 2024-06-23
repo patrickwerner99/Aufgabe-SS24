@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Wildlife Observation Data</title>
+    <link rel="stylesheet" type="text/css" href="create.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function fetchAnimals() {
+            $.ajax({
+                url: 'http://localhost:8080/animals',
+                type: 'GET',
+                success: function(data) {
+                    let output = '<h2>Animals</h2><input type="text" id="animalSearch" onkeyup="searchTable(\'animalTable\', \'animalSearch\')" placeholder="Search for animals.."><table id="animalTable" class="styled-table"><thead><tr><th>ID</th><th>Genus</th><th>Gender</th><th>Estimated Size</th><th>Estimated Weight</th><th>Estimated Age</th></tr></thead><tbody>';
+                    data.forEach(function(animal) {
+                        output += `<tr><td>${animal.id}</td><td>${animal.genus}</td><td>${animal.gender}</td><td>${animal.estimatedSize}</td><td>${animal.estimatedWeight}</td><td>${animal.estimatedAge}</td></tr>`;
+                    });
+                    output += '</tbody></table>';
+                    document.getElementById('animalData').innerHTML = output;
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    alert('Error fetching animal data');
+                }
+            });
+        }
+
+        function fetchGenus() {
+            $.ajax({
+                url: 'http://localhost:8080/genus',
+                type: 'GET',
+                success: function(data) {
+                    let output = '<h2>Genus</h2><input type="text" id="genusSearch" onkeyup="searchTable(\'genusTable\', \'genusSearch\')" placeholder="Search for genus.."><table id="genusTable" class="styled-table"><thead><tr><th>ID</th><th>Name</th></tr></thead><tbody>';
+                    data.forEach(function(genus) {
+                        output += `<tr><td>${genus.id}</td><td>${genus.name}</td></tr>`;
+                    });
+                    output += '</tbody></table>';
+                    document.getElementById('genusData').innerHTML = output;
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    alert('Error fetching genus data');
+                }
+            });
+        }
+
+        function fetchLocations() {
+            $.ajax({
+                url: 'http://localhost:8080/api/location',
+                type: 'GET',
+                success: function(data) {
+                    let output = '<h2>Locations</h2><input type="text" id="locationSearch" onkeyup="searchTable(\'locationTable\', \'locationSearch\')" placeholder="Search for locations.."><table id="locationTable" class="styled-table"><thead><tr><th>ID</th><th>Short Title</th><th>Description</th><th>Time</th><th>Date</th></tr></thead><tbody>';
+                    data.forEach(function(location) {
+                        output += `<tr><td>${location.id}</td><td>${location.shortTitle}</td><td>${location.description}</td><td>${location.time}</td><td>${location.date}</td></tr>`;
+                    });
+                    output += '</tbody></table>';
+                    document.getElementById('locationData').innerHTML = output;
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    alert('Error fetching location data');
+                }
+            });
+        }
+
+        function fetchObservations() {
+            $.ajax({
+                url: 'http://localhost:8080/api/observation',
+                type: 'GET',
+                success: function(data) {
+                    let output = '<h2>Observations</h2><input type="text" id="observationSearch" onkeyup="searchTable(\'observationTable\', \'observationSearch\')" placeholder="Search for observations.."><table id="observationTable" class="styled-table"><thead><tr><th>ID</th><th>Animal ID</th><th>Location ID</th><th>Observation Date</th></tr></thead><tbody>';
+                    data.forEach(function(observation) {
+                        output += `<tr><td>${observation.id}</td><td>${observation.animalId}</td><td>${observation.locationId}</td><td>${observation.observationDate}</td></tr>`;
+                    });
+                    output += '</tbody></table>';
+                    document.getElementById('observationData').innerHTML = output;
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    alert('Error fetching observation data');
+                }
+            });
+        }
+
+        function searchTable(tableId, searchId) {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById(searchId);
+            filter = input.value.toLowerCase();
+            table = document.getElementById(tableId);
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) {
+                tr[i].style.display = "none";
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fetch data when the page loads
+        $(document).ready(function() {
+            fetchAnimals();
+            fetchGenus();
+            fetchLocations();
+            fetchObservations();
+        });
+    </script>
+</head>
+<body>
+    <h1>View Wildlife Observation Data</h1>
+    <div id="animalData"></div>
+    <div id="genusData"></div>
+    <div id="locationData"></div>
+    <div id="observationData"></div>
+</body>
+</html>
