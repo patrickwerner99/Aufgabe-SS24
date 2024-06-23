@@ -1,0 +1,43 @@
+//Adar Mak 84387
+package application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class GenusService {
+    @Autowired
+    private GenusRepository genusRepository;
+
+    //Alle Genus abrufen
+    public List<Genus> getAllGenuses() {
+        return (List<Genus>) genusRepository.findAll();
+    }
+
+    //Genus erstellen
+    public Genus saveGenus(Genus genus) {
+        return genusRepository.save(genus);
+    }
+
+    //Genus aktualisieren richtig
+    /*public Genus updateGenus(Long id, Genus updateGenus) {
+        Genus genus = genusRepository.findById(id).orElse(null);
+    		if (genus != null) {
+    			genus.setId(genus.getId());
+    			genus.setName(genus.getName());
+    		}
+    	return genusRepository.save(genus);
+    }*/
+    
+    //Genus erstellen (pfusch)
+    public Genus updateGenus(Genus genus) {
+        return genusRepository.save(genus);
+    }
+
+    //Genus löschen
+    public void deleteGenus(Long id) {
+        genusRepository.deleteById(id);
+    }
+}
