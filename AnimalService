@@ -1,0 +1,57 @@
+//Adar Mak 84387
+package application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class AnimalService {
+   
+	@Autowired
+    private AnimalRepository animalRepository;
+
+	
+	//Alle Animal abrufen
+    public List<Animal> findAllAnimal() {
+        return animalRepository.findAll();
+    }
+
+    
+    //Animal erstellen
+    public Animal saveAnimal(Animal animal) {
+        return animalRepository.save(animal);
+    }
+
+    
+    //Animal aktualisieren richtig
+    /*public Animal updateAnimal(Long id, Animal updateAnimal) {
+        Animal animal = animalRepository.findById(id).orElse(null);
+    		if (animal != null) {
+    			animal.setEstimatedAge(animal.getEstimatedAge());
+    			animal.setEstimatedSize(animal.getEstimatedSize());
+    			animal.setEstimatedWeight(animal.getEstimatedWeight());
+    			animal.setGender(animal.getGender());
+    			animal.setGenus(animal.getGenus());
+    		}
+    	return animalRepository.save(animal);
+    }*/   
+
+    
+    //Animal aktualisieren (pfusch)
+    public Animal updateAnimal(Animal animal) {
+        return animalRepository.save(animal);
+    }
+    
+    //Animal löschen
+    public Animal deleteAnimal(Long id, Animal deleteAnimal) {
+        Animal animal = animalRepository.findById(id).orElse(null);
+        	if (animal != null) {
+        		animal.setId(animal.getId());
+        	}
+    	return animalRepository.save(animal);
+    }
+}
