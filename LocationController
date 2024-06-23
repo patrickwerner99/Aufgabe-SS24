@@ -1,0 +1,49 @@
+//Adar Mak 84387
+package application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class LocationController {
+    @Autowired
+    private LocationService locationService;
+
+    
+    //Alle Location abrufen
+    @GetMapping("/api/location")
+    public List<Location> getAllLocations() {
+        return locationService.findAll();
+    }
+
+    
+    //Location erstellen
+    @PostMapping("/api/location")
+    public Location createLocation(@RequestBody Location location) {
+        return locationService.save(location);
+    }
+
+    
+    //Location aktualisieren richtig
+    /*@RequestMapping(method=RequestMethod.PUT, value="api/location/{id}")
+	public void updateLocation(@PathVariable Long id, @RequestBody Location location) {
+	locationService.updateLocation(id, location);
+    }*/
+
+    
+    //Location aktualisieren (pfusch)
+    @RequestMapping(method=RequestMethod.PUT, value="api/location/{id}")
+	public void updateLocation(@RequestBody Location location) {
+	locationService.updateLocation(location);
+    }
+    
+    
+    //Location löschen
+    @DeleteMapping("/api/location/{id}")
+    public void deleteLocation(@PathVariable Long id) {
+        locationService.deleteById(id);
+    }
+}
+
