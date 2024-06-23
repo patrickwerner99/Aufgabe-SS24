@@ -1,0 +1,47 @@
+//Adar Mak 84387
+package application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class LocationService {
+    @Autowired
+    private LocationRepository locationRepository;
+
+    //Alle Location abrufen
+    public List<Location> findAll() {
+        return (List<Location>) locationRepository.findAll();
+    }
+
+    //Location erstellen
+    public Location save(Location location) {
+        return locationRepository.save(location);
+    }
+
+    //Location aktualisieren richtig
+    /*public Location updateLocation(Long id, Location updateLocation) {
+    	Location location = locationRepository.findById(id).orElse(null);
+    		if (location != null) {
+    			location.setId(location.getId());
+    			location.setShortTitle(location.getShortTitle());
+    			location.setDescription(location.getDescription());
+    			location.setTime(location.getTime());
+    			location.setDate(location.getDate());
+    		}
+    	return locationRepository.save(location);
+    }*/
+    
+    
+    //Location aktualisieren (pfusch)
+    public Location updateLocation(Location location) {
+        return locationRepository.save(location);
+    }
+    
+    //Location löschen
+    public void deleteById(Long id) {
+        locationRepository.deleteById(id);
+    }
+}
