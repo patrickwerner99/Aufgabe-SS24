@@ -1,0 +1,47 @@
+//Adar Mak 84387
+package application;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ObservationService {
+    @Autowired
+    private ObservationRepository observationRepository;
+
+    //Alle Observation anzeigen 
+    public List<Observation> findAll() {
+        return observationRepository.findAll();
+    }
+
+    //Observation erstellen
+    public Observation save(Observation observation) {
+        return observationRepository.save(observation);
+    }
+
+    //Observation aktualisieren richtig
+    /*public Observation updateObservation(Long id, Observation updateObservation) {
+        Observation observation = observationRepository.findById(id).orElse(null);
+    		if (observation != null) {
+    			observation.setId(observation.getId());
+    			observation.setAnimalId(observation.getAnimalId());
+    			observation.setLocationId(observation.getLocationId());
+    			observation.setObservationDate(observation.getObservationDate());
+    		}
+    	return observationRepository.save(observation);
+    }*/
+    
+    //Observation aktualisieren (pfusch)
+    public Observation updateObservation(Observation observation) {
+        return observationRepository.save(observation);
+    }
+
+    //Observation löschen
+    public void deleteById(Long id) {
+        observationRepository.deleteById(id);
+    }
+}
+
