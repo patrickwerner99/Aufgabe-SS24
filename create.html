@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Wildlife Observation</title>
+    <link rel="stylesheet" href="css/create.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/ajaxfunctions.js"></script>
+    <script>
+        function createAnimal() {
+            const animal = {
+                id: document.getElementById('animalId').value,
+                genus: document.getElementById('animalGenus').value,
+                gender: document.getElementById('animalGender').value,
+                estimatedSize: document.getElementById('animalEstimatedSize').value,
+                estimatedWeight: document.getElementById('animalEstimatedWeight').value,
+                estimatedAge: document.getElementById('animalEstimatedAge').value
+            };
+
+            fetch('http://localhost:8080/animals', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(animal)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Animal created successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating animal!');
+            });
+        }
+
+        function createGenus() {
+            const genus = {
+                name: document.getElementById('genusName').value
+            };
+
+            fetch('http://localhost:8080/genus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(genus)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Genus created successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating genus!');
+            });
+        }
+
+        function createLocation() {
+            const location = {
+                shortTitle: document.getElementById('locationShortTitle').value,
+                description: document.getElementById('locationDescription').value,
+                date: document.getElementById('locationDate').value,
+                time: document.getElementById('locationTime').value
+            };
+
+            fetch('http://localhost:8080/api/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(location)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Location created successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating location!');
+            });
+        }
+
+        function createObservation() {
+            const observation = {
+                animalId: document.getElementById('observationAnimalId').value,
+                locationId: document.getElementById('observationLocationId').value,
+                observationDate: document.getElementById('observationDate').value
+            };
+
+            fetch('http://localhost:8080/api/observation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(observation)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Observation created successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error creating observation!');
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Create Wildlife Observation</h1>
+    <div class="form-container">
+        <div class="box">
+            <h2>Create Animal</h2>
+            <form onsubmit="event.preventDefault(); createAnimal();">
+                <label for="animalId">ID:</label>
+                <input type="text" id="animalId" name="animalId"><br><br>
+
+                <label for="animalGenus">Genus:</label>
+                <input type="text" id="animalGenus" name="animalGenus"><br><br>
+                <label for="animalGender">Gender:</label>
+                <select id="animalGender" name="animalGender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select><br><br>
+                <label for="animalEstimatedSize">Estimated Size:</label>
+                <input type="text" id="animalEstimatedSize" name="animalEstimatedSize"><br><br>
+                <label for="animalEstimatedWeight">Estimated Weight:</label>
+                <input type="text" id="animalEstimatedWeight" name="animalEstimatedWeight"><br><br>
+                <label for="animalEstimatedAge">Estimated Age:</label>
+                <input type="text" id="animalEstimatedAge" name="animalEstimatedAge"><br><br>
+                <input type="submit" value="Create Animal">
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Create Genus</h2>
+            <form onsubmit="event.preventDefault(); createGenus();">
+                <label for="genusName">Genus Name:</label>
+                <input type="text" id="genusName" name="genusName"><br><br>
+                <input type="submit" value="Create Genus">
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Create Location</h2>
+            <form onsubmit="event.preventDefault(); createLocation();">
+                <label for="locationShortTitle">Short Title:</label>
+                <input type="text" id="locationShortTitle" name="locationShortTitle"><br><br>
+                <label for="locationDescription">Description:</label>
+                <input type="text" id="locationDescription" name="locationDescription"><br><br>
+                <label for="locationDate">Date:</label>
+                <input type="date" id="locationDate" name="locationDate"><br><br>
+                <label for="locationTime">Time:</label>
+                <input type="time" id="locationTime" name="locationTime"><br><br>
+                <input type="submit" value="Create Location">
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Create Observation</h2>
+            <form onsubmit="event.preventDefault(); createObservation();">
+                <label for="observationAnimalId">Animal ID:</label>
+                <input type="text" id="observationAnimalId" name="observationAnimalId"><br><br>
+                <label for="observationLocationId">Location ID:</label>
+                <input type="text" id="observationLocationId" name="observationLocationId"><br><br>
+                <label for="observationDate">Observation Date:</label>
+                <input type="datetime-local" id="observationDate" name="observationDate"><br><br>
+                <input type="submit" value="Create Observation">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
