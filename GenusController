@@ -1,0 +1,49 @@
+//Adar Mak 84387
+package application;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+
+public class GenusController {
+    @Autowired
+    private GenusService genusService;
+
+    
+    //Alle Genus abrufen
+    @GetMapping("/genus")
+    public List<Genus> getAllGenuses() {
+        return genusService.getAllGenuses();
+    }
+
+
+    //Genus erstellen
+    @PostMapping("/genus")
+    public void createGenus(@RequestBody Genus genus) {
+        genusService.saveGenus(genus);
+    }
+
+    
+    //Genus aktualisiern richtig
+    /*@RequestMapping(method=RequestMethod.PUT, value="/genus/{id}")
+	public void updateAnimal(@PathVariable Long id, @RequestBody Genus genus) {
+	genusService.updateGenus(id, genus);
+    }*/
+    
+    //Genus aktualisiern (pfusch)
+    @RequestMapping(method=RequestMethod.PUT, value="/genus/{id}")
+	public void updateAnimal(@RequestBody Genus genus) {
+	genusService.updateGenus(genus);
+    }
+
+    
+    //Genus löschen
+    @DeleteMapping("/genus/{id}")
+    public void deleteGenus(@PathVariable Long id) {
+        genusService.deleteGenus(id);
+    }
+}
