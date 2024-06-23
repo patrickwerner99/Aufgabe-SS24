@@ -1,0 +1,48 @@
+//Adar Mak 84387
+package application;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class ObservationController {
+    @Autowired
+    private ObservationService observationService;
+
+    
+    //Alle Observation abrufen
+    @GetMapping("/api/observation")
+    public List<Observation> getAllObservation() {
+        return observationService.findAll();
+    }
+
+    
+    //Observation erstellen
+    @PostMapping("/api/observation")
+    public Observation createObservation(@RequestBody Observation observed) {
+        return observationService.save(observed);
+    }
+
+    
+    //Obseravation aktualisieren richtig
+    /*@RequestMapping(method=RequestMethod.PUT, value="api/observation/{id}")
+	public void updateObservation(@PathVariable Long id, @RequestBody Observation observation) {
+	observationService.updateObservation(id, observation);
+    }*/
+
+    
+    //Obseravation aktualisieren (pfusch)
+    @RequestMapping(method=RequestMethod.PUT, value="api/observation/{id}")
+	public void updateObservation(@RequestBody Observation observation) {
+	observationService.updateObservation(observation);
+    }
+    
+    
+    //Observation löschen
+    @DeleteMapping("/api/observation/{id}")
+    public void deleteObservation(@PathVariable Long id) {
+        observationService.deleteById(id);
+    }
+}
